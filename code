@@ -1,0 +1,122 @@
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   Typing Practice 
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+  <style>
+   body {
+            font-family: 'Roboto', sans-serif;
+        }
+  </style>
+ </head>
+ <body class="bg-gray-100">
+  <!-- Header -->
+  <header class="bg-white shadow-md">
+   <div class="container mx-auto px-4 py-2 flex justify-between items-center">
+    <div class="flex items-center space-x-4">
+     <img alt="Typing site logo, a keyboard icon" class="w-10 h-10" height="40" src="https://storage.googleapis.com/a1aa/image/f4fBfyPChacxPpO6BYq5LLoYd25E3ylAMueBW8rXHRSKJugPB.jpg" width="40"/>
+     <h1 class="text-xl font-bold">
+      Typing Practice
+     </h1>
+    </div>
+    <div class="flex items-center space-x-4">
+     <button class="text-gray-600">
+      <i class="fas fa-user">
+      </i>
+     </button>
+     <button class="text-gray-600">
+      <i class="fas fa-cog">
+      </i>
+     </button>
+    </div>
+   </div>
+  </header>
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 py-6">
+   <div class="bg-white rounded-lg shadow-md p-6">
+    <h2 class="text-2xl font-bold mb-4">
+     Typing Test
+    </h2>
+    <div class="mb-4">
+     <p class="text-gray-700">
+      Type the following text as quickly and accurately as you can that you see in the bar:
+     </p>
+     <p class="bg-gray-100 p-4 rounded-lg mt-2 text-lg" id="typing-text">
+      The quick brown fox jumps over the big lazy dog.
+     </p>
+    </div>
+    <textarea class="w-full p-4 border rounded-lg h-32" id="typing-input" placeholder="Start typing here..."></textarea>
+    <div class="mt-4 flex justify-between items-center">
+     <button class="px-4 py-2 bg-blue-500 text-white rounded-lg" id="start-button">
+      Start
+     </button>
+     <div class="text-gray-700">
+      <span id="timer">
+       0
+      </span>
+      seconds
+     </div>
+    </div>
+   </div>
+   <div class="bg-white rounded-lg shadow-md p-6 mt-6">
+    <h2 class="text-2xl font-bold mb-4">
+     Results
+    </h2>
+    <div class="flex justify-between items-center">
+     <div>
+      <p class="text-gray-700">
+       Words per minute:
+      </p>
+      <p class="text-2xl font-bold" id="wpm">
+       0
+      </p>
+     </div>
+     <div>
+      <p class="text-gray-700">
+       Accuracy:
+      </p>
+      <p class="text-2xl font-bold" id="accuracy">
+       0%
+      </p>
+     </div>
+    </div>
+   </div>
+  </main>
+  <script>
+   let startTime;
+        let timerInterval;
+
+        document.getElementById('start-button').addEventListener('click', () => {
+            document.getElementById('typing-input').value = '';
+            document.getElementById('wpm').innerText = '0';
+            document.getElementById('accuracy').innerText = '0%';
+            startTime = new Date();
+            timerInterval = setInterval(updateTimer, 1000);
+        });
+
+        document.getElementById('typing-input').addEventListener('input', () => {
+            const typedText = document.getElementById('typing-input').value;
+            const originalText = document.getElementById('typing-text').innerText;
+            const wordsTyped = typedText.split(' ').length;
+            const timeElapsed = (new Date() - startTime) / 1000 / 60; // in minutes
+            const wpm = Math.round(wordsTyped / timeElapsed);
+            document.getElementById('wpm').innerText = wpm;
+
+            const correctChars = typedText.split('').filter((char, index) => char === originalText[index]).length;
+            const accuracy = Math.round((correctChars / originalText.length) * 100);
+            document.getElementById('accuracy').innerText = accuracy + '%';
+        });
+
+        function updateTimer() {
+            const timeElapsed = Math.floor((new Date() - startTime) / 1000);
+            document.getElementById('timer').innerText = timeElapsed;
+        }
+  </script>
+ </body>
+</html>
